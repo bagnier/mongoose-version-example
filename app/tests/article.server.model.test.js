@@ -13,12 +13,6 @@ var should = require('should'),
  */
 var user, article;
 
-describe('#VersionModel', function() {
-    it('should expose a version model in the original schema', function() {
-        should.exist(Article.VersionedModel);
-    });
-});
-
 /**
  * Unit tests
  */
@@ -42,6 +36,12 @@ describe('Article Model Unit Tests:', function() {
 
 			done();
 		});
+	});
+
+	describe('#VersionModel', function() {
+	    it('should expose a version model in the original schema', function() {
+	        should.exist(Article.VersionedModel);
+	    });
 	});
 
 	describe('Method Save', function() {
@@ -80,6 +80,22 @@ describe('Article Model Unit Tests:', function() {
 
 	                    done();
 	                });
+	            });
+	        });
+	    });
+
+	    it('should save a version model in an array when using "array" strategy', function(done) {
+	        var test = new Article({ title: 'franz' });
+	        test.save(function(err) {
+	            should.not.exist(err);
+
+	            Article.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
+	                should.not.exist(err);
+	                should.exist(versionedModel);
+
+	                should(versionedModel.versions.length).equal(1);
+
+	                done();
 	            });
 	        });
 	    });

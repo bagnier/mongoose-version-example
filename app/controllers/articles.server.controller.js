@@ -108,6 +108,21 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List Versions of an Article
+ */
+exports.versioned = function(req, res) {
+	Article.VersionedModel.findOne({ refId : req.article._id}).sort('-created').populate('user', 'displayName').exec(function(err, article) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(article);
+		}
+	});
+};
+
+/**
  * Article middleware
  */
 exports.articleByID = function(req, res, next, id) {

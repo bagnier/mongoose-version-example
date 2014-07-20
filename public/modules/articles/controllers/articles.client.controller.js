@@ -54,5 +54,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				articleId: $stateParams.articleId
 			});
 		};
+
+		$scope.findOneVersioned = function() {
+			$scope.article = Articles.get({
+				articleId: $stateParams.articleId
+			});
+			$scope.articleVersion = Articles.versioned({
+				articleId: $stateParams.articleId
+			});
+		};
 	}
 ]);
