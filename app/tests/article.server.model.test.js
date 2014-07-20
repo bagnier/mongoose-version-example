@@ -13,6 +13,12 @@ var should = require('should'),
  */
 var user, article;
 
+describe('#VersionModel', function() {
+    it('should expose a version model in the original schema', function() {
+        should.exist(Article.VersionedModel);
+    });
+});
+
 /**
  * Unit tests
  */
@@ -54,6 +60,29 @@ describe('Article Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should save a version model when saving origin model twice', function(done) {
+			var test = new Article({ title: 'franz' });
+	        test.save(function(err) {
+	            should.not.exist(err);
+
+	            test.title = 'hugo';
+
+	            test.save(function(err) {
+	                should.not.exist(err);
+
+	                Article.VersionedModel.findOne({
+	                    refId : test._id,
+	                    versions : { $elemMatch : { refVersion : test.__v }}
+	                }, function(err, versionedModel) {
+	                    should.not.exist(err);
+	                    should.exist(versionedModel);
+
+	                    done();
+	                });
+	            });
+	        });
+	    });
 	});
 
 	afterEach(function(done) {

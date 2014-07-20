@@ -32,6 +32,6 @@ var ArticleSchema = new Schema({
 	}
 });
 
-ArticleSchema.plugin(version);
+ArticleSchema.plugin(version, { strategy : 'array'});
 
 mongoose.model('Article', ArticleSchema);
