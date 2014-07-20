@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	version = require('mongoose-version');
 
 /**
  * Article Schema
@@ -30,5 +31,7 @@ var ArticleSchema = new Schema({
 		ref: 'User'
 	}
 });
+
+ArticleSchema.plugin(version);
 
 mongoose.model('Article', ArticleSchema);
