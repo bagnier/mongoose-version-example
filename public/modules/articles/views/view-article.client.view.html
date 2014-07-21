@@ -1,12 +1,6 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOneVersioned()">
+<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="article.title"></h1>
-	</div>
-	<div>
-		{{article | json}}
-	</div>
-	<div>
-		{{articleVersion | json}}
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == article.user._id">
 		<a class="btn btn-primary" href="/#!/articles/{{article._id}}/edit">
@@ -14,6 +8,9 @@
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+		<a class="btn btn-primary" href="/#!/articles/{{article._id}}/versions">
+			<i class="glyphicon glyphicon-time"></i>
 		</a>
 	</div>
 	<small>

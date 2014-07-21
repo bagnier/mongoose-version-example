@@ -12,7 +12,7 @@ angular.module('articles').factory('Articles', ['$resource',
 			versioned: {
 				method: 'GET',
 				isArray: false,
-				url: 'articles/:articleId/versioned'
+				url: 'articles/:articleId/versions'
 			}
 		});
 	}

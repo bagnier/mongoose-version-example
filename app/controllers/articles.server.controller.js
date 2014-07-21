@@ -110,8 +110,8 @@ exports.list = function(req, res) {
 /**
  * List Versions of an Article
  */
-exports.versioned = function(req, res) {
-	Article.VersionedModel.findOne({ refId : req.article._id}).sort('-created').populate('user', 'displayName').exec(function(err, article) {
+exports.versions = function(req, res) {
+	Article.VersionedModel.findOne({ refId : req.article._id}).sort('-created').populate('versions.user', 'displayName').exec(function(err, article) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)

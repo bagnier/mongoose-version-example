@@ -92,6 +92,34 @@
 			expect(scope.article).toEqualData(sampleArticle);
 		}));
 
+		it('$scope.findOneAndVersions() should fetch one article object and its versions', inject(function(Articles) {
+			// Define a sample article object
+			var sampleArticle = new Articles({
+				title: 'An Article about MEAN',
+				content: 'MEAN rocks!'
+			});
+
+			var sampleArticleVersions = {
+				title: 'An Article about MEAN',
+				content: 'MEAN rocks!'
+			};
+
+			// Set the URL parameter
+			$stateParams.articleId = '525a8422f6d0f87f0e407a33';
+
+			// Set GET response
+			$httpBackend.expectGET('articles/' + $stateParams.articleId).respond(sampleArticle);
+			$httpBackend.expectGET('articles/' + $stateParams.articleId + '/versions').respond(sampleArticle);
+
+			// Run controller functionality
+			scope.findOneAndVersions();
+			$httpBackend.flush();
+
+			// Test scope value
+			expect(scope.article).toEqualData(sampleArticle);
+			expect(scope.articleVersions).toEqualData(sampleArticleVersions);
+		}));
+
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Articles) {
 			// Create a sample article object
 			var sampleArticlePostData = new Articles({
