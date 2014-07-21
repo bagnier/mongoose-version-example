@@ -1,0 +1,30 @@
+<section data-ng-controller="ArticlesController" data-ng-init="findOneAndVersions()">
+	<div class="page-header">
+		<h1 data-ng-bind="article.title"></h1>
+	</div>
+	<div class="pull-right" data-ng-show="authentication.user._id == article.user._id">
+		<a class="btn btn-primary" href="/#!/articles/{{article._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<br>
+	<br>
+	<div class="list-group">
+  		<div class="list-group-item" ng-repeat="version in articleVersions.versions">
+			<small>
+				<em class="text-muted">
+					Posted on
+					<span data-ng-bind="version.created | date:'mediumDate'"></span>
+					by
+					<span data-ng-bind="version.user.displayName"></span>
+				</em>
+			</small>
+			<span ng-show="$last" class="badge">Current version</span>
+			<h4 data-ng-bind="version.title"></h4>
+			<p class="lead" data-ng-bind="version.content"></p>
+		</div>
+	</div>
+</section>
